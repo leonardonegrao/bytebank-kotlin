@@ -1,34 +1,19 @@
 fun main() {
     println("Welcome to Bytebank!")
 
-    val account = Account("Leonardo Negrão", "0001")
+    val account = Account(owner = "Leonardo Negrão", accountNumber = "0001")
     account.deposit(0.0)
-    val balance = account.getBalance()
+    val balance = account.balance
     println("Your current balance is $balance")
 }
 
-class Account(var owner: String, var accountNumber: String) {
-    private val agency: Int = 1000
-    private var balance: Double = 0.0
-    
-    fun getAgency(): Int {
-        return this.agency
-    }
-
-    fun getBalance(): Double {
-        return this.balance
-    }
-
-    fun setBalance(value: Double) {
-        if (value <= 0) {
-            this.balance -= value
-        } else {
-            this.balance += value
-        }
-    }
+class Account(val owner: String, val accountNumber: String) {
+    val agency: Int = 1000
+    var balance: Double = 0.0
+        private set
 
     fun deposit(value: Double) {
-        val depositIsValid = AccountHelpers.validateDeposit(value)
+        val depositIsValid = AccountHelpers.validateDeposit(value = value)
 
         if (depositIsValid) {
             this.balance += value
@@ -38,7 +23,7 @@ class Account(var owner: String, var accountNumber: String) {
     }
 
     fun withdraw(value: Double) {
-        val withdrawIsValid = AccountHelpers.validateWithdraw(value, this.balance)
+        val withdrawIsValid = AccountHelpers.validateWithdraw(value = value, currentBalance = this.balance)
 
         if (withdrawIsValid) {
             this.balance -= value
@@ -48,11 +33,11 @@ class Account(var owner: String, var accountNumber: String) {
     }
 
     fun wireTransfer(receiver: Account, value: Double) {
-        val wireTransferIsValid = AccountHelpers.validateWithdraw(value, this.balance)
+        val wireTransferIsValid = AccountHelpers.validateWithdraw(value = value, currentBalance = this.balance)
 
         if (wireTransferIsValid) {
             this.balance -= value
-            receiver.deposit(value)
+            receiver.deposit(value = value)
         }
     }
 }
