@@ -1,10 +1,9 @@
-class Employee(
-        private val name: String,
-        private val document: String,
-        private val salary: Double
+open class Employee(
+        val name: String,
+        val document: String,
+        val salary: Double
 ) {
-    fun bonus(): Double {
+    open fun bonus(): Double {
         return this.salary * 0.1
     }
-
 }
