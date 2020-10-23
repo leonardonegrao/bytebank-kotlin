@@ -3,7 +3,5 @@ open class Employee(
         val document: String,
         val salary: Double
 ) {
-    open fun bonus(): Double {
-        return this.salary * 0.1
-    }
+    open fun bonus(): Double = this.salary * 0.1
 }
